@@ -1,0 +1,94 @@
+A knowledge graph organizes information so that both people and machines can understand the data and how its pieces are connected.
+A knowledge graph is a structured representation of real-world entities and their relationships, visualized as a network of nodes (entities) connected  by edges (relationships).
+
+What is a DataFrame
+  A DataFrame is a table-like data structure
+    each row = one record (one person / one relation)
+    each column = one attribute (name, age, relation, etc.)
+
+1. Gender Analysis (EASY + HIGH IMPACT)
+# Count male vs female relations
+male_relations = ['fatherOf', 'sonOf', 'brotherOf', 'husbandOf', 'uncleOf', 'nephewOf']
+female_relations = ['motherOf', 'daughterOf', 'sisterOf', 'wifeOf', 'auntOf', 'nieceOf']
+
+# Analyze: Is there gender imbalance in recorded relationships?
+# Hypothesis: Patriarchal families might have more male-centric records
+
+2. Generation Depth Analysis (MEDIUM + CREATIVE)
+# Use the G_family graph you built
+# For each root ancestor, find the longest path (generation depth)
+# Which families have deepest recorded history?
+
+max_depths = {}
+for root in roots:
+    depths = nx.single_source_shortest_path_length(G_family, root)
+    max_depths[root] = max(depths.values()) if depths else 0
+
+# Visualize generation depth distribution
+
+3. Nuclear Family Detection (HARD but IMPRESSIVE)
+
+# A nuclear family = 2 parents + their children
+# Find all (mother, father) pairs who share children
+
+nuclear_families = []
+for person in G_family.nodes():
+    # Find this person's parents
+    parents = [p for p in G_family.predecessors(person)]
+    if len(parents) == 2:
+        # This is a child with both parents recorded
+        nuclear_families.append(tuple(sorted(parents) + [person]))
+
+# Count complete vs incomplete nuclear families
+
+4. Marriage Network Analysis (SUPER CREATIVE!)
+# Extract only spouse relationships
+marriage_graph = nx.Graph()
+for h, r, t in train_triples:
+    if r in ['husbandOf', 'wifeOf']:
+        marriage_graph.add_edge(h, t)
+
+# Analyze:
+# - Are there "marriage bridges" connecting separate family clans?
+# - Community detection on marriage network = identifying family alliances
+
+5. Asymmetry Analysis (MIND-BLOWING)
+
+# Check if relationships are symmetric
+# Example: If (A, sisterOf, B), does (B, sisterOf, A) exist?
+
+asymmetries = {}
+for h, r, t in train_triples:
+    # Check reverse
+    inverse_exists = (t, r, h) in set(train_triples)
+    if not inverse_exists:
+        asymmetries[(h, r, t)] = True
+
+# Analyze: Why are some relationships not recorded both ways?
+
+6. Orphan & Childless Analysis (EMOTIONAL + ANALYTICAL)
+
+# People with no parents recorded
+orphans = [n for n in G_family.nodes() if G_family.in_degree(n) == 0]
+
+# People with no children recorded  
+childless = [n for n in G_family.nodes() if G_family.out_degree(n) == 0]
+
+# BUT - are they truly childless, or just youngest generation?
+# Cross-check with age proxies (generation level)
+
+7. Centrality Contradiction Analysis (PhD-LEVEL INSIGHT)
+# Compare different centrality measures
+# Find people who are:
+# - High degree BUT low betweenness = Popular within one family
+# - Low degree BUT high betweenness = Critical marriage bridges
+
+contradictions = []
+for node in G_undirected.nodes():
+    if degree_centrality[node] > 0.1 and betweenness[node] < 0.01:
+        contradictions.append((node, 'isolated_hub'))
+    elif degree_centrality[node] < 0.05 and betweenness[node] > 0.1:
+        contradictions.append((node, 'critical_bridge'))
+
+
+scikit-learn expects 32-bit integer indices in sparse matrices but received 64-bit. I'll fix this by converting the indices to 32-bit integers:

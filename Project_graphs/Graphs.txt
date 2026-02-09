@@ -1,0 +1,90 @@
+Meta F-A-M-I-L-Y
+“I solemnly swear that I am up to no good” ~ The Marauders 
+
+Graphs are all around us, and nearly everything can be represented as a graph. One particularly interesting application of graphs are family trees. Think of how huge a family can get even if you just account for a few generations of family, let aside all generations of it and graphs hold the power of representing this huge amount of data in a subtle, compact and beautiful way. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+For this task, we'll be working with MetaFam - a synthetic family Knowledge Graph (KGs are cool, go look them up)  containing many people connected through various family relationship types. To give a brief introduction, a KG is a structured representation of entities and their relationships, stored as (head, relation, tail) triples. For example, (Alice, motherOf, Bob) represents that Alice is the mother of Bob. It basically gives more textual meaning to a graph. 
+
+Go ahead and download the dataset from here.
+Note: For all tasks, you are supposed to only use train.txt, unless stated otherwise.
+
+Done? Now for the task…
+
+Task 1: Dataset Exploration
+“Makes a diff’rence, havin’ a decent family” ~Rubeus
+
+Your first task is to load the dataset, explore its structure, and understand what you're working with. A few questions to get you started: How many people are there? How many relationship types? What's the distribution of different relationships? 
+(The more you work with your data, the more insights you get and more points as well 🙂)
+
+Compute and report relevant statistics about the graph. Think about what metrics make sense for a family knowledge graph.
+Create at least one meaningful visualization of the graph (or a subgraph, preferred). Make it informative (use gpt to make it pretty)
+
+With this information, we now ask: Can we use tools and concepts from Graph Theory to uncover interesting patterns in family structures, identify 'important' family members, and understand the hierarchical nature of family relationships?
+
+Some properties to explore include different types of centrality, density, diameter, clustering coefficient, and path lengths. Feel free to use properties that feel well connected to the task at hand. This task is focused on exploratory data analysis, and you are, at the very least, expected to show plots/metrics to support your findings. However, more emphasis will be placed on the qualitative insights that you come up with. Few tasks which are interesting are finding and defining important nodes in the graph, identifying generations in a family.
+Task 2: Family Clusters
+“We are only as strong as we are united, as weak as we are divided” ~Albus
+
+Community detection or clustering is an important analysis for graphs. In the study of complex networks, a network is said to have community structure if the nodes of the network can be easily grouped into disjoint sets of nodes such that each set of nodes is densely connected internally, and sparsely between different communities.
+
+Implement any two algorithms/ML methods for community detection on the graph (No need to do it from scratch).
+Objectively assess the quality of your community detection through metrics like Modularity.
+Analysis Questions:
+Do the detected communities correspond to actual family units (e.g., nuclear families, extended families)?
+How many generations typically exist within a single community?
+Are there any "bridge" individuals who connect different family clusters?
+
+ In real genealogy, people often want to find their closest relatives. Based on your community analysis, propose a metric/method to rank how related two people are beyond just counting hops.
+Task 3: Rule Mining 
+“Happiness can be found even in the darkest of times, if only one remembers to turn on the light” ~Albus
+
+One of the most fascinating aspects of knowledge graphs is that they encode logical rules that can be discovered automatically. In a family graph, many relationships can be inferred from others through compositional reasoning. For example if (X, motherOf, Y)  (Y, fatherOf, Z)  (X, grandmotherOf, Z).
+
+Rule Discovery: Discover at least 5 logical rules that hold in the MetaFam knowledge graph. These can be:
+Horn clauses: relation1(X,Y) ∧ relation2(Y,Z) → relation3(X,Z)
+Inverse rules: relation1(X,Y) → relation2(Y,X)
+More complex patterns involving 3+ relations
+
+Validation: For each rule you discover:
+Report its confidence (what fraction of the time does the rule hold?)
+Report its support (how many instances of this rule exist in the data?)
+Provide concrete examples from the dataset
+Task 4: Link prediction!
+“Things we lose have a way of coming back to us in the end, if not always in the way we expect” ~Luna
+
+In real-world KGs, not all relationships are explicitly stated. Can we predict missing family relationships using machine learning? This is called KG Completion or Link Prediction - a fundamental task in graph machine learning!
+
+Use the train.txt as your training data and test.txt as your test set to evaluate link prediction performance.
+
+Train a KG Embedding method (TransE, DistMult, RotatE, CompleX, etc) and a GNN based approach (R-GCN, CompGCN, etc). Try to include both, but don’t worry if you’re only able to do one of them! Note that for GNN-based approaches, you'll need to make a scoring function for edge prediction. Python notebook with examples are provided in resource 🙂
+Report standard link prediction metrics like MRR, Hits@1, Hits@10 on the test data. Plot the loss after training. 
+Resources:
+Networkx python library
+Community Detection
+Graph machine learning
+Knowledge Graph Embeddings: Simplistic and Powerful Representations.ipynb 
+Link prediction with RGCN
+
+"Mischief Managed"
+

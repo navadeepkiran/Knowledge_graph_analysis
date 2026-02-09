@@ -1,0 +1,71 @@
+Computers cannot understand the string "Harry". They only understand lists of numbers. Vectorization is the process 
+of turning a specific person (Node) into a specific list of numbers (Vector) that represents their "meaning."
+
+1. The Old Way (Bad): One-Hot Encoding
+Imagine you have 100 people. You could give everyone a unique ID.
+
+Harry = [1, 0, 0, ...]
+
+Albus = [0, 1, 0, ...]
+
+Why this sucks: The computer thinks Harry and Albus are 100% different. It doesn't know they are 
+both "Males" or "Wizards." There is no shared meaning
+
+The New Way (Good): Embeddings (The "Map")
+  we assign Harry a list of coordinates in a magical multi-dimensional space.
+  Let's say we only have 2 dimensions (X, Y) for simplicity.
+  Harry: [0.9, 0.1] (Maybe X means "Age", Y means "Gender")
+  Albus: [0.8, 0.1] 
+  Lily: [0.2, 0.9]
+  In this vector space:
+  Harry is close to Albus on the X-axis (Maybe X is Magic Power?).
+The Goal: We want the computer to learn these numbers 
+  so that similar people end up close together on the map.
+
+Knowledge Graph Embeddings (KGE)
+  How do we represent Relationships?
+    (Harry, FatherOf, Albus). We need to turn FatherOf into a vector too.
+  Method A: TransE (Translating Embeddings)
+    Think of FatherOf as a movement command (a vector arrow).
+    Harry + FatherOf $\approx$ Albus
+    Vector(Harry) + Vector(FatherOf) = Vector(Albus)
+    If Harry is at [2, 2] and FatherOf is "Move Right by 2" ([2, 0]), then Albus must be at [4, 2]. 
+    The computer moves Harry's point, looks for who is standing there, and finds Albus.
+   Why TransE fails for Families:
+     It struggles with Symmetry (Siblings). If Harry is SiblingOf Ron, and Ron is SiblingOf Harry.
+      Harry + Sibling = Ron
+      Ron + Sibling = Harry
+      both should hold simultaneously
+      Combined: Harry + Sibling + Sibling = Harry  2 times Sibling = 0  Sibling = 0.
+      The model concludes "Sibling" means "Do nothing," which is wrong.
+  Method B: RotatE (Rotating Embeddings) - Use This!
+     Instead of sliding the point, we rotate it around the center (Complex space).
+      Rule: FatherOf rotates you clockwise. SonOf rotates you counter-clockwise.
+      Symmetry: SiblingOf might rotate you 180 degrees (conceptually).
+    This captures Inverse relationships (Parent/Child) perfectly, 
+    which is why RotatE is the standard for Family Trees.
+
+
+Graph Neural Networks (GNN)
+   Embeddings (Part 2) ignore the graph structure during the "lookup". 
+   They just look at the ID. GNNs (Graph Neural Networks) use the connections to build the vector.
+   The Concept: Message Passing Imagine Harry doesn't have a vector yet. He is blank.
+    Look at Neighbors: Harry is connected to James (Dad) and Lily (Mom).
+    Message: James sends a message "I am a Male, Older". Lily sends "I am Female, Older".
+    Aggregation: Harry takes these messages and averages them.
+    Update: Harry realizes "Oh, if my parents are X and Y, I must be Z."
+  Why is this better? If you have a missing link (e.g., we don't know who Harry's brother is), 
+  the GNN can look at Harry's neighbors (Parents) and Ron's neighbors (Parents).
+  Harry has parents James/Lily.
+  Ron has parents James/Lily.
+  The GNN sees their "Context Vectors" are identical.
+  Prediction: High probability of Sibling link.
+
+
+   What you are actually doing in codeInput: (Harry, FatherOf, Albus) text.ID 
+   Mapping:Harry -> 0Albus -> 1FatherOf -> 0
+   Initialization:Create a random table of numbers for Node_Embeddings (Size: Num_People x 100).
+   Create a random table for Relation_Embeddings (Size: Num_Relations x 100).
+   Training Loop (The Magic):Pick a real fact: (Harry, FatherOf, Albus).Look up vectors:
+    $V_{Harry}, V_{Father}, V_{Albus}$.Calculate Score: Is $V_{Harry} + V_{Father} \approx V_{Albus}$?Corrupt it: 
+    Pretend (Harry, FatherOf, Voldemort) is true.Calculate Bad Score: Is $V_{Harry} + V_{Father} \approx V_{Voldemort}$?Loss Function: We want (Good Score) to be HIGH and (Bad Score) to be LOW.Update: Nudge the numbers in the table slightly to make the score better next time.Result: After 100 loops, the vectors in your table represent the true family structure.You don't need to write the math. PyKEEN does the loop. PyTorch Geometric does the Message Passing. You just feed them the data.

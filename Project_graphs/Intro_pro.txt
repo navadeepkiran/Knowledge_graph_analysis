@@ -1,0 +1,45 @@
+PRECOG RECRUITMENT TASKS 2026
+Tasks are centered around four central themes 
+NLP 
+Computer Vision
+Graphs
+Quant
+
+Applicants must choose any one theme and complete the task listed under that theme.
+
+You are encouraged to draw upon existing literature, blogs, and other credible resources to inform your design decisions. While doing so, you are expected to clearly justify the choices and assumptions you make.
+You are not required to follow the architectures or methods suggested in the task description, if any. Feel free to design and experiment with your own approaches, modify existing ideas, combine techniques, or explore entirely new directions.
+Importantly, all experiments are valuable, including those that do not yield positive results. Any approach you attempt, successful or not should be documented and discussed in your report or presentation.
+We strongly recommend reviewing relevant prior work and appropriately citing the literature wherever it informs your methodology, analysis, or implementation.
+For some tasks there are bonus tasks - to demonstrate that you can go the extra mile (which is an important characteristic of being in our group)! We encourage you to try those bonus tasks. 
+To overcome compute constraints:
+You can use Google Colab, Kaggle for compute intensive jobs.
+Take a subset of data if the dataset is huge - ex. 25% / 50% / 75% of train data
+
+You must attempt this task on your own. Please make sure you cite any external resources that you may use. We will also check your submission for plagiarism, including ChatGPT :) 
+
+
+
+Submission:
+Put all your code/notebooks in a GitHub repository. Maintain a README.md explaining your codebase, the directory structure, commands to run your project, the dependency libraries used and the approach you followed. 
+A Python notebook is mandatory and must clearly log all experiments and results. Submissions consisting only of Python scripts without accountable, logged results will not be considered. All outcomes must be transparent, reproducible, and traceable within the notebook.
+The link to the GitHub repository will be asked for during the interview.
+Presentation / Report: 
+Programming Task : Document the process and compile a presentation / report summarizing your findings, methodologies, and  insights gained from the analysis in a presentation/report. Your report must contain your methodology, findings, results etc. On the first page, It must detail exactly what parts of the task you did, and what parts of the task you did not do and why. The report would be one of the main documents that would help us take your application forward for the next stages.
+
+Evaluation:
+You will be evaluated based on how you approach the problem, and not so much on the performance measures like accuracy etc. Although, we would expect you to beat random performance. 
+How you present your code and findings. You should justify all the choices you make regarding data, model, and hyperparameters that you use. You should also be able to demonstrate theoretical understanding of the approaches used.
+Across all the tasks, your experiments will give you some quantitative measures to indicate the efficacy of your approach (Accuracy, Recall, MAE, MSE etc) - but dig deeper to analyze the predictions. Can you come up with any hypothesis for why your approach fails/succeeds? Can this analysis help you improve on your approach? Creativity in this analysis is what we are looking for!! - SURPRISE US!!.
+How do you handle and sample from large real-world datasets, and solve tasks with whatever resources you have access to.. 
+
+For any doubts regarding this task please directly email to the address provided for each task, add the following email in cc - george.rahul@research.iiit.ac.in and debangan.mishra@students.iiit.ac.in. If you don't get a reply within 24 hrs feel free to drop a reminder.
+
+Tasks
+The CV Task can be found in this tab CV.
+The NLP Task can be found in this tab NLP.
+The Graphs Task can be found in this tab Graphs.
+The Quant Task can be found in this tab Quant.
+
+“If you wait until you’re ready, you’ll be waiting the rest of your life.” - Lemony Snicket
+
